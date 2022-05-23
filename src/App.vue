@@ -302,17 +302,6 @@ export default {
       }
     },
 
-    // async updateTickers() {
-    //   if (!this.tickers.length) {
-    //     return;
-    //   }
-    //   // const exchangeData = await loadTickers(this.tickers.map((t) => t.name));
-    //   this.tickers.forEach((ticker) => {
-    //     const price = exchangeData[ticker.name.toUpperCase()];
-    //     ticker.price = price ?? "-";
-    //   });
-    // },
-
     add() {
       const currentTicker = {
         name: this.ticker.toUpperCase(),
@@ -321,7 +310,10 @@ export default {
 
       if (this.tickerNames.includes(currentTicker.name)) {
         this.alert = "Такой тикер уже добавлен";
-      } else if (!this.filteredNames[0]) {
+      } else if (
+        !this.filteredNames[0] ||
+        this.filteredNames[0].Symbol !== currentTicker.name
+      ) {
         this.alert = "Такой монеты не существует!";
       } else {
         this.tickers = [...this.tickers, currentTicker];
@@ -331,6 +323,7 @@ export default {
         );
         this.filter = "";
         this.ticker = "";
+        console.log(this.filteredNames[0]);
       }
     },
 
