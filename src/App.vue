@@ -80,7 +80,7 @@
               </span>
             </div>
             <div v-if="alert" class="text-sm text-red-600">
-              Такой тикер уже добавлен
+              {{ alert }}
             </div>
           </div>
         </div>
@@ -233,7 +233,7 @@ export default {
       graph: [],
       page: 1,
       filter: "",
-      alert: false,
+      alert: "",
       isPageLoading: true,
     };
   },
@@ -263,8 +263,6 @@ export default {
     }
 
     this.tickers.forEach((ticker) => this.tickerNames.push(ticker.name));
-
-    setInterval(() => this.updateTickers(), 5000);
   },
 
   mounted() {
@@ -288,7 +286,12 @@ export default {
     updateTicker(tickerName, price) {
       this.tickers
         .filter((t) => t.name === tickerName)
-        .forEach((t) => (t.price = price));
+        .forEach((t) => {
+          if (t === this.selectedTicker) {
+            this.graph.push(price);
+          }
+          t.price = price;
+        });
     },
 
     formatPrice(price) {
@@ -316,8 +319,10 @@ export default {
         price: "-",
       };
 
-      if (this.tickerNames.includes(this.ticker.toUpperCase())) {
-        this.alert = true;
+      if (this.tickerNames.includes(currentTicker.name)) {
+        this.alert = "Такой тикер уже добавлен";
+      } else if (!this.filteredNames[0]) {
+        this.alert = "Такой монеты не существует!";
       } else {
         this.tickers = [...this.tickers, currentTicker];
         this.tickerNames = [...this.tickerNames, currentTicker.name];
@@ -407,7 +412,7 @@ export default {
     },
 
     ticker() {
-      this.alert = false;
+      this.alert = "";
     },
 
     selectedTicker() {
