@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 const API_KEY =
   "6cfd8b3e71d1cfe3233314c62a394e3053eaa6762422c37bdb4f3f7d6e472db9";
 const tickersHandlers = new Map();
@@ -43,11 +42,11 @@ function subscribeToTickerOnWs(ticker) {
 }
 
 function unsubscribeFromTickerOnWs(ticker) {
-    sendToWebSocket({
-      action: "SubRemove",
-      subs: [`5~CCCAGG~${ticker}~USD`],
-    });
-  }
+  sendToWebSocket({
+    action: "SubRemove",
+    subs: [`5~CCCAGG~${ticker}~USD`],
+  });
+}
 
 export const subscribeToTicker = (ticker, cb) => {
   const subscribers = tickersHandlers.get(ticker) || [];
