@@ -1,4 +1,7 @@
 # cryptonomicon
+This is my main pet project for now. Currently working on adding global store (Vuex/Pinia) and applying component-based architecture.
+App is already working as intended so you can test it by yourself. 
+I would be grateful for any constructive feedback. :) 
 
 ## Project setup
 ```
